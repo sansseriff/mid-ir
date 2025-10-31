@@ -1,4 +1,4 @@
-# mid-ir
+# __REPO_NAME__
 
 Brief description: Replace this paragraph with a short overview of your dataset and experiment goals. Include links to data sources if public, and summarize the key questions you answer.
 
@@ -13,19 +13,19 @@ Run one of these commands in a terminal to clone and set up the project (require
 macOS/Linux (curl):
 
 ```zsh
-curl -fsSL https://sansseriff.github.io/mid-ir/dl.sh | bash
+__DOWNLOAD_CMD__
 ```
 
 macOS/Linux (wget):
 
 ```zsh
-wget -qO- https://sansseriff.github.io/mid-ir/dl.sh | bash
+__WGET_CMD__
 ```
 
 Windows (PowerShell):
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://sansseriff.github.io/mid-ir/dl.ps1 | iex"
+__WIN_POWERSHELL_CMD__
 ```
 
 ### Security: Verify before running
@@ -52,7 +52,7 @@ sh dl.sh
 Integrity (SHA256 of dl.sh):
 
 ```text
-007423048a0ed2345637273e5d6d6df1c264b4483e4e62c04719f2b1a58b6703
+__SHA256_DL_SH__
 ```
 
 <!-- QUICK_INSTALL_END -->

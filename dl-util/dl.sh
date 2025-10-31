@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Download-and-run bootstrap for a science repo.
+#
+# Contract:
+# - Expects REPO_URL to point to the GitHub repository to clone.
+# - If run inside an existing git repo working tree, it will pull and reuse it.
+# - Otherwise, it will clone and cd into the new repo directory.
+# - Finally, runs dl-util/install_and_sync.sh from the repo.
+
+# IMPORTANT: This placeholder is updated by initialize_repo.sh during bootstrap.
+# Do not edit manually unless you know what you're doing.
+REPO_URL="https://github.com/sansseriff/mid-ir.git"
+
+# Fallback if placeholder somehow remains (best-effort guess)
+if [[ "$REPO_URL" == "__REPO_URL__" ]]; then
+    echo "Warning: REPO_URL placeholder not set. Attempting to infer..." >&2
+    # Try to infer from repo_url.txt if present next to this script (when run locally)
+    if [[ -f "repo_url.txt" ]]; then
+        inferred=$(head -n1 repo_url.txt | tr -d '\r\n' || true)
+        if [[ -n "${inferred:-}" ]]; then
+            REPO_URL="$inferred"
+        fi
+    fi
+fi
+
+if [[ -z "$REPO_URL" || "$REPO_URL" == "__REPO_URL__" ]]; then
+    echo "Error: REPO_URL is not configured. Ask the repo owner to run the bootstrap script." >&2
+    exit 1
+fi
+
+TARGET_DIR="$(pwd)"
+
+is_git_repo() {
+    git -C "$1" rev-parse --is-inside-work-tree >/dev/null 2>&1
+}
+
+if is_git_repo "$TARGET_DIR"; then
+    echo "Detected existing git repository in $TARGET_DIR — pulling latest..."
+    git -C "$TARGET_DIR" pull --ff-only
+    REPO_ROOT="$TARGET_DIR"
+else
+    echo "Cloning $REPO_URL ..."
+    git clone "$REPO_URL"
+    REPO_DIR_NAME="$(basename -s .git "$REPO_URL")"
+    REPO_ROOT="$TARGET_DIR/$REPO_DIR_NAME"
+fi
+
+cd "$REPO_ROOT"
+
+if [[ ! -f dl-util/install_and_sync.sh ]]; then
+    echo "Error: Expected dl-util/install_and_sync.sh in repo: $REPO_ROOT" >&2
+    exit 1
+fi
+
+echo "Running dl-util/install_and_sync.sh ..."
+bash -i dl-util/install_and_sync.sh

@@ -1,0 +1,61 @@
+#!/usr/bin/env pwsh
+# PowerShell bootstrap for this repo
+# - Clones the repository specified by $RepoUrl
+# - If run inside an existing git repo, pulls latest
+# - Attempts to run dl-util/install_and_sync.sh via bash if available
+
+$ErrorActionPreference = 'Stop'
+
+# IMPORTANT: This value is set by initialize_repo.sh during bootstrap.
+# Do not edit manually unless you know what you're doing.
+$RepoUrl = "__REPO_URL__"
+
+if ([string]::IsNullOrWhiteSpace($RepoUrl) -or $RepoUrl -eq "__REPO_URL__") {
+    Write-Error "Repo URL is not configured. Ask the repo owner to run the bootstrap script."
+}
+
+function Test-GitRepo([string]$Path) {
+    try {
+        git -C $Path rev-parse --is-inside-work-tree *> $null
+        return $LASTEXITCODE -eq 0
+    } catch { return $false }
+}
+
+$cwd = (Get-Location).Path
+if (Test-GitRepo -Path $cwd) {
+    Write-Host "Detected existing git repository in $cwd - pulling latest..."
+    git -C $cwd pull --ff-only
+    $repoRoot = $cwd
+} else {
+    Write-Host "Cloning $RepoUrl ..."
+    git clone $RepoUrl
+    $name = [System.IO.Path]::GetFileNameWithoutExtension($RepoUrl)
+    $repoRoot = Join-Path $cwd $name
+}
+
+Set-Location $repoRoot
+
+$installPs1 = Join-Path $repoRoot 'dl-util/install_and_sync.ps1'
+$installSh  = Join-Path $repoRoot 'dl-util/install_and_sync.sh'
+
+if (Test-Path $installPs1) {
+    Write-Host "Running dl-util/install_and_sync.ps1 ..."
+    # Run with ExecutionPolicy Bypass for reliability across systems
+    $pwsh = Get-Command pwsh -ErrorAction SilentlyContinue
+    if ($pwsh) {
+        & $pwsh -NoProfile -ExecutionPolicy Bypass -File $installPs1
+    } else {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $installPs1
+    }
+} elseif (Test-Path $installSh) {
+    # Fallback to bash-based installer if present
+    $bash = Get-Command bash -ErrorAction SilentlyContinue
+    if ($bash) {
+        Write-Host "Running dl-util/install_and_sync.sh via bash ..."
+        & $bash -lc "cd '$repoRoot'; bash -i dl-util/install_and_sync.sh"
+    } else {
+        Write-Error "Neither install_and_sync.ps1 nor a usable bash environment for install_and_sync.sh was found."
+    }
+} else {
+    Write-Error "Expected dl-util/install_and_sync.ps1 or dl-util/install_and_sync.sh in repo: $repoRoot"
+}
