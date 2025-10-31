@@ -1,0 +1,55 @@
+name: Deploy dl.sh to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+permissions:
+  pages: write # to deploy to Pages
+  id-token: write # to verify the deployment originates from an appropriate source
+  contents: read
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Pages content
+        run: |
+          mkdir -p dl-util
+          # Prefer CNAME from dl-util/ (template keeps it here). Fallback to repo root if present.
+          if [ -f dl-util/CNAME ]; then
+            echo "Using CNAME from dl-util/"
+          elif [ -f CNAME ]; then
+            echo "Copying CNAME from repo root into dl-util/"
+            cp CNAME dl-util/CNAME
+          fi
+          # Ensure GitHub Pages doesn't run Jekyll processing (keep .nojekyll in dl-util/)
+          if [ ! -f dl-util/.nojekyll ]; then
+            echo "Creating dl-util/.nojekyll"
+            touch dl-util/.nojekyll
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dl-util
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
