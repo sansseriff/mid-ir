@@ -496,7 +496,7 @@ requires-dist = [
     { name = "matplotlib", specifier = ">=3.10.1" },
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "seaborn", specifier = ">=0.13.2" },
-    { name = "snsphd", specifier = ">=0.2.1" },
+    { name = "snsphd", specifier = ">=0.2.5" },
 ]
 
 [package.metadata.requires-dev]

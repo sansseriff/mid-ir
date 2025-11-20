@@ -9,7 +9,7 @@ dependencies = [
     "matplotlib>=3.10.1",
     "pandas>=2.2.3",
     "seaborn>=0.13.2",
-    "snsphd>=0.2.1",
+    "snsphd>=0.2.5",
 ]
 
 [dependency-groups]
