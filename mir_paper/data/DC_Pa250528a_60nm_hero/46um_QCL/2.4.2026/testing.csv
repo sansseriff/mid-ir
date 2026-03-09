@@ -1,0 +1,11 @@
+# metadata,value
+mode,qcl
+fudge_factor,1
+on_start,0.1
+on_stop,0.29
+off_start,0.6
+off_stop,30
+
+Bias_Current,Counts_TL1(0.016),DCounts_TL1(0.016),ClicksOn_TL1(0.016),ClicksOff_TL1(0.016)
+0.0686,58117.55579424753,2759.637188208617,347,2434
+0.0706,49197.93531447667,3082.766439909297,298,2719
