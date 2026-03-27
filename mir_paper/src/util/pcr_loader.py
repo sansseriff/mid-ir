@@ -65,7 +65,7 @@ class PcrCurve:
 
     @property
     def bias_uA(self) -> np.ndarray:
-        return self.bias_current * 1e6
+        return self.bias_current
 
     @property
     def normalized_counts(self) -> np.ndarray:
@@ -109,8 +109,12 @@ class ThresholdSweepDataset:
         if not rows:
             raise ValueError(f"No CSV rows found in {csv_path}")
         header = rows[0]
-        numeric_rows = [row for row in rows[1:] if row and any(item.strip() for item in row)]
-        matrix = np.asarray([[float(item) for item in row] for row in numeric_rows], dtype=float)
+        numeric_rows = [
+            row for row in rows[1:] if row and any(item.strip() for item in row)
+        ]
+        matrix = np.asarray(
+            [[float(item) for item in row] for row in numeric_rows], dtype=float
+        )
         columns = {name: matrix[:, idx] for idx, name in enumerate(header)}
         return cls(
             path=csv_path,
@@ -138,7 +142,12 @@ class ThresholdSweepDataset:
         if not options:
             raise ValueError(f"No threshold columns found in {self.path}")
         if selector is None or selector == "auto":
-            best = max(options, key=lambda option: np.nanmax(self.columns[f"Counts_TL{option.index}({option.value:.3f})"]))
+            best = max(
+                options,
+                key=lambda option: np.nanmax(
+                    self.columns[f"Counts_TL{option.index}({option.value:.3f})"]
+                ),
+            )
             return best
         if isinstance(selector, str):
             stripped = selector.strip()
@@ -154,7 +163,9 @@ class ThresholdSweepDataset:
         selector_value = float(selector)
         return min(options, key=lambda option: abs(option.value - selector_value))
 
-    def get_column(self, prefix: str, selector: int | float | str | None = None) -> np.ndarray:
+    def get_column(
+        self, prefix: str, selector: int | float | str | None = None
+    ) -> np.ndarray:
         option = self._resolve_threshold(selector)
         key = f"{prefix}_TL{option.index}({option.value:.3f})"
         if key not in self.columns:
@@ -319,7 +330,9 @@ def load_pickled_pcr_curve(path: str | Path, *, label: str | None = None) -> Pcr
 
     exposure_ratio = data.light_counts.shape[-1] / data.dark_counts.shape[-1]
     counts_rate = (counts_optimal - dark_optimal * exposure_ratio) / counts_exposure
-    counts_error = np.sqrt(counts_optimal + dark_optimal * exposure_ratio**2) / counts_exposure
+    counts_error = (
+        np.sqrt(counts_optimal + dark_optimal * exposure_ratio**2) / counts_exposure
+    )
     dark_rate = dark_optimal * exposure_ratio / counts_exposure
     dark_rate_error = dark_error * exposure_ratio / counts_exposure
 
@@ -380,7 +393,9 @@ def load_legacy_light_dark_curve(
     light_curve.metadata.update(
         {
             "dark_path": str(_as_path(dark_path)),
-            "dark_threshold": dark_curve.threshold.value if dark_curve.threshold else None,
+            "dark_threshold": (
+                dark_curve.threshold.value if dark_curve.threshold else None
+            ),
         }
     )
     return light_curve
