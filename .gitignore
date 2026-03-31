@@ -16,3 +16,11 @@ src/.ipynb_checkpoints/
 .DS_Store
 .ipynb_checkpoints
 .vscode
+
+# Generated output files (machine-specific, do not track)
+mir_paper/out/60nm_hero/
+mir_paper/out/single_wire/
+mir_paper/out/wire/
+mir_paper/out/presi/
+mir_paper/out/snaps/
+mir_paper/out/mm_square/
