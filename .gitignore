@@ -17,7 +17,9 @@ src/.ipynb_checkpoints/
 .ipynb_checkpoints
 .vscode
 
-# Generated output files (machine-specific, do not track)
+mir_paper/out/presi.zip
+mir_paper/out/scope_trace.pdf
+mir_paper/out/scope_trace.png
 mir_paper/out/60nm_hero/
 mir_paper/out/single_wire/
 mir_paper/out/wire/
