@@ -12,8 +12,7 @@ wheels/
 
 src/.ipynb_checkpoints/
 
-# add 
+# add
 .DS_Store
 .ipynb_checkpoints
 .vscode
-.gitignore
