@@ -78,6 +78,13 @@ if (-not $uv) {
     } catch {
         Write-Warning "[warn] nbstripout git filter installation skipped."
     }
+
+    try {
+        Write-Host "[setup] Configuring nbstripout extrakeys..."
+        git config filter.nbstripout.extrakeys 'metadata.kernelspec'
+    } catch {
+        Write-Warning "[warn] nbstripout extrakeys config skipped."
+    }
 }
 
 function Should-Launch {
