@@ -44,6 +44,9 @@ if command -v uv >/dev/null 2>&1; then
     uv run ipython kernel install --user --name="project" || echo "[warn] ipython kernel registration skipped."
 fi
 
+echo "[setup] Installing nbstripout git filter..."
+uv run nbstripout --install || echo "[warn] nbstripout git filter installation skipped."
+
 # Prompt control: honor START_JUPYTER if provided, otherwise try prompting via /dev/tty
 should_launch() {
     case "${START_JUPYTER:-}" in
