@@ -15,7 +15,6 @@ src/.ipynb_checkpoints/
 # add
 .DS_Store
 .ipynb_checkpoints
-.vscode
 
 mir_paper/out/presi.zip
 mir_paper/out/scope_trace.pdf
