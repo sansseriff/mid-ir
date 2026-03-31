@@ -65,7 +65,7 @@ class PcrCurve:
 
     @property
     def bias_uA(self) -> np.ndarray:
-        return self.bias_current
+        return self.bias_current * 1e6
 
     @property
     def normalized_counts(self) -> np.ndarray:
