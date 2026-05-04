@@ -1,0 +1,173 @@
+{
+  "device_label": "46 µm",
+  "power_ramp": {
+    "filename": "POWERSCAN_QCL_46_25_240__FRIDGE_260__SAVE_3_16_DETECTOR_0.08__WINDOWT_0.003_0.023_startV_27.3_step_0.1.csv",
+    "groups": {
+      "QCL": [
+        {
+          "label": "wavelength",
+          "value": "46 µm"
+        },
+        {
+          "label": "ontime",
+          "value": "25 µs"
+        },
+        {
+          "label": "reprate",
+          "value": "240 Hz"
+        }
+      ],
+      "FRIDGE": [
+        {
+          "label": "temp",
+          "value": "260 mK"
+        }
+      ],
+      "SAVE": [
+        {
+          "label": "inttime",
+          "value": "3 s"
+        },
+        {
+          "label": "trigger",
+          "value": "16 mV"
+        }
+      ],
+      "DETECTOR": [
+        {
+          "label": "bias",
+          "value": "0.08 µA"
+        }
+      ],
+      "WINDOWT": [
+        {
+          "label": "onstart",
+          "value": "0.003 ms"
+        },
+        {
+          "label": "onstop",
+          "value": "0.023 ms"
+        }
+      ]
+    }
+  },
+  "hist": {
+    "n_files": 7,
+    "filename_pattern": "HIST__QCL_46_29.0_223_50_120__FRIDGE_251__SAVE_30_16_DETECTOR_0.08.json",
+    "groups": {
+      "QCL": [
+        {
+          "label": "wavelength",
+          "value": "46 µm"
+        },
+        {
+          "label": "voltage",
+          "value": "29.0 V – 32.0 V"
+        },
+        {
+          "label": "current",
+          "value": "223 mA – 283 mA"
+        },
+        {
+          "label": "ontime",
+          "value": "50 µs"
+        },
+        {
+          "label": "reprate",
+          "value": "120 Hz"
+        }
+      ],
+      "FRIDGE": [
+        {
+          "label": "temp",
+          "value": "251 mK"
+        }
+      ],
+      "SAVE": [
+        {
+          "label": "inttime",
+          "value": "30 s"
+        },
+        {
+          "label": "trigger",
+          "value": "16 mV"
+        }
+      ],
+      "DETECTOR": [
+        {
+          "label": "bias",
+          "value": "0.08 µA"
+        }
+      ]
+    }
+  },
+  "pcr": {
+    "filename": "PCR__QCL_46_30.9_260_50.0_120__WINDOWT_0.010_0.048_0.048_0.048_0.120_2__FRIDGE_259_SAVET_4_cycles_8.csv",
+    "groups": {
+      "QCL": [
+        {
+          "label": "wavelength",
+          "value": "46 µm"
+        },
+        {
+          "label": "voltage",
+          "value": "30.9 V"
+        },
+        {
+          "label": "current",
+          "value": "260 mA"
+        },
+        {
+          "label": "ontime",
+          "value": "50.0 µs"
+        },
+        {
+          "label": "reprate",
+          "value": "120 Hz"
+        }
+      ],
+      "WINDOWT": [
+        {
+          "label": "onstart",
+          "value": "0.010 ms"
+        },
+        {
+          "label": "onstop",
+          "value": "0.048 ms"
+        },
+        {
+          "label": "ondcrstart",
+          "value": "0.048 ms"
+        },
+        {
+          "label": "ondcrstop",
+          "value": "0.048 µs"
+        },
+        {
+          "label": "offstart",
+          "value": "0.120 ms"
+        },
+        {
+          "label": "offstop",
+          "value": "2 ms"
+        }
+      ],
+      "FRIDGE": [
+        {
+          "label": "temp",
+          "value": "259 mK"
+        }
+      ],
+      "SAVET": [
+        {
+          "label": "inttime",
+          "value": "4 s"
+        },
+        {
+          "label": "cycles",
+          "value": "8"
+        }
+      ]
+    }
+  }
+}

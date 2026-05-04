@@ -113,7 +113,11 @@ class ThresholdSweepDataset:
             row for row in rows[1:] if row and any(item.strip() for item in row)
         ]
         matrix = np.asarray(
-            [[float(item) for item in row] for row in numeric_rows], dtype=float
+            [
+                [float(item) if item.strip() else np.nan for item in row]
+                for row in numeric_rows
+            ],
+            dtype=float,
         )
         columns = {name: matrix[:, idx] for idx, name in enumerate(header)}
         return cls(
